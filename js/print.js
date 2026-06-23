@@ -17,6 +17,22 @@ export function printReport(oprHtml) {
   const printCss = `
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+    :root {
+      --primary: #0f4c81;
+      --primary-hover: #0b375e;
+      --primary-light: #f0f7fc;
+      --ink: #0f172a;
+      --body: #334155;
+      --muted: #475569;
+      --canvas: #ffffff;
+      --canvas-soft: #f8fafc;
+      --hairline: #e2e8f0;
+      --hairline-strong: #cbd5e1;
+      --surface-strong: #f1f5f9;
+      --r-md: 8px;
+      --r-pill: 9999px;
+    }
+
     @page {
       size: A4 portrait;
       margin: 7mm 9mm;
@@ -32,7 +48,7 @@ export function printReport(oprHtml) {
       margin: 0;
       padding: 0;
       font-family: 'Inter', sans-serif;
-      color: #171717;
+      color: var(--ink);
     }
 
     .opr-sheet,
@@ -44,7 +60,7 @@ export function printReport(oprHtml) {
       width: 100%;
       height: 283mm; /* exact printable A4 height */
       font-size: 13px;
-      color: #171717;
+      color: var(--ink);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -63,7 +79,7 @@ export function printReport(oprHtml) {
 
     /* Header */
     .opr-header {
-      background: #154a84 !important;
+      background: var(--primary) !important;
       color: white;
       padding: 8px 14px !important;
       display: flex;
@@ -136,7 +152,7 @@ export function printReport(oprHtml) {
       font-size: 24px !important;
       font-weight: 700 !important;
       line-height: 1.3 !important;
-      color: #000000 !important;
+      color: var(--ink) !important;
       margin: 0;
     }
     .opr-badge {
@@ -174,11 +190,11 @@ export function printReport(oprHtml) {
     .opr-summary-card {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      border: 1px solid #d9d9d9;
+      gap: 4px;
+      border: 1px solid var(--hairline-strong);
       border-radius: 6px;
-      padding: 6px 10px;
-      background: #f5f5f5 !important;
+      padding: 4px 8px;
+      background: var(--canvas-soft) !important;
       margin-bottom: 4px;
     }
     .opr-summary-item {
@@ -191,7 +207,7 @@ export function printReport(oprHtml) {
     }
     .opr-summary-icon {
       font-size: 14px;
-      color: #154a84;
+      color: var(--primary);
     }
     .opr-summary-details {
       display: flex;
@@ -200,19 +216,20 @@ export function printReport(oprHtml) {
     .opr-summary-label {
       font-size: 7px !important;
       font-weight: 600;
-      color: #60646c;
+      color: var(--muted);
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
     .opr-summary-value {
       font-size: 11px !important;
       font-weight: 600;
-      color: #171717;
+      color: var(--ink);
     }
 
     /* Sections */
     .opr-section {
       margin-bottom: 4px !important;
+      flex-shrink: 0 !important;
     }
     .opr-section-head {
       font-size: 12px !important;
@@ -220,16 +237,15 @@ export function printReport(oprHtml) {
       text-transform: uppercase;
       letter-spacing: 0.4px !important;
       padding: 3px 8px !important;
-      background: #eef6fa !important;
-      border-left: 4px solid #0f4c81 !important;
-      color: #0f4c81 !important;
+      background: var(--primary-light) !important;
+      color: var(--primary) !important;
       margin-bottom: 0;
     }
     .opr-section-body {
       font-size: 11px !important;
       line-height: 1.35 !important;
       padding: 3px 6px !important;
-      color: #2b2b2b !important;
+      color: var(--body) !important;
       word-wrap: break-word !important;
       overflow-wrap: break-word !important;
       word-break: break-word !important;
@@ -239,7 +255,7 @@ export function printReport(oprHtml) {
     .opr-dashboard-grid {
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
-      gap: 12px !important;
+      gap: 8px !important;
       margin-bottom: 4px !important;
     }
 
@@ -252,7 +268,7 @@ export function printReport(oprHtml) {
       font-size: 11px !important;
       line-height: 1.35 !important;
       font-weight: 400 !important;
-      color: #2b2b2b !important;
+      color: var(--body) !important;
     }
 
     /* Photos Grid */
@@ -267,7 +283,7 @@ export function printReport(oprHtml) {
 
     .opr-photos {
       display: grid !important;
-      gap: 12px !important;
+      gap: 8px !important;
       padding: 4px 10px !important;
       flex-grow: 1 !important;
       min-height: 0 !important;
@@ -323,8 +339,37 @@ export function printReport(oprHtml) {
       height: 0 !important;
       flex-grow: 1 !important;
       object-fit: cover !important;
-      border-radius: 5px !important;
-      border: 1px solid #dcdee0 !important;
+      border-radius: var(--r-sm) !important;
+      border: 1px solid var(--hairline-strong) !important;
+    }
+
+    .opr-photo-img.portrait {
+      object-fit: contain !important;
+      background-color: var(--surface-strong) !important;
+    }
+
+    .opr-photos.all-portrait .opr-photo-img {
+      object-fit: cover !important;
+      background-color: transparent !important;
+    }
+
+    .opr-photos.all-portrait.opr-photos-count-1 {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: stretch !important;
+    }
+    .opr-photos.all-portrait.opr-photos-count-1 .opr-photo-container {
+      width: 55% !important;
+      flex: none !important;
+      min-height: 0 !important;
+    }
+
+    .opr-photos.all-portrait.opr-photos-count-3 {
+      grid-template-columns: repeat(3, 1fr) !important;
+      grid-template-rows: 1fr !important;
+    }
+    .opr-photos.all-portrait.opr-photos-count-3 > .opr-photo-container:first-child {
+      grid-column: auto !important;
     }
 
     .opr-photos-count-1 .opr-photo-img,
@@ -335,7 +380,7 @@ export function printReport(oprHtml) {
     }
     .opr-photo-caption {
       font-size: 9px !important;
-      color: #60646c;
+      color: var(--muted);
       text-align: center;
       margin-top: 2px;
       word-wrap: break-word;
@@ -358,9 +403,9 @@ export function printReport(oprHtml) {
       display: flex !important;
       justify-content: space-between !important;
       font-size: 8px !important;
-      color: #999 !important;
+      color: var(--muted) !important;
       padding: 4px 10px 0 !important;
-      border-top: 1px solid #d9d9d9 !important;
+      border-top: 1px solid var(--hairline) !important;
       margin-top: 10px !important;
     }
 

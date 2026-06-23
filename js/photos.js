@@ -139,7 +139,7 @@ export function initPhotoUpload(dropZoneId, fileInputId, gridId, badgeId) {
       deleteBtn.className = 'photo-delete-btn';
       deleteBtn.type = 'button';
       deleteBtn.innerHTML = '&times;';
-      deleteBtn.ariaLabel = `Buang gambar ${photo.name}`;
+      deleteBtn.setAttribute('aria-label', `Buang gambar ${photo.name}`);
       
       deleteBtn.addEventListener('click', (e) => {
         e.stopPropagation(); // Avoid triggering dropzone click

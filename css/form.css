@@ -186,6 +186,32 @@ body {
   resize: vertical;
 }
 
+.form-group input[readonly],
+.form-group textarea[readonly],
+.form-group select[readonly],
+.form-group input:disabled,
+.form-group textarea:disabled,
+.form-group select:disabled {
+  background-color: var(--surface-strong);
+  color: var(--muted);
+  cursor: not-allowed;
+  border-color: var(--hairline);
+}
+
+.time-range-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-xs);
+}
+
+.form-sub-label {
+  font-size: 12px !important;
+  color: var(--muted) !important;
+  margin-bottom: var(--sp-xs);
+  display: block;
+}
+
 .form-group select {
   height: 44px;
   appearance: none;
@@ -365,15 +391,16 @@ body {
 
 .photo-delete-btn {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 2px;
+  right: 2px;
   background-color: rgba(15, 76, 129, 0.9);
   color: var(--on-primary);
-  border: none;
-  width: 24px;
-  height: 24px;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  width: 44px;
+  height: 44px;
   border-radius: var(--r-pill);
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -403,7 +430,7 @@ button.btn {
   font-size: 14px;
   font-weight: 600;
   border-radius: var(--r-md);
-  height: 42px;
+  height: 44px;
   padding: 0 var(--sp-lg);
   cursor: pointer;
   display: inline-flex;
@@ -515,5 +542,23 @@ button.btn:disabled {
   
   .form-grid-step1 .full-width {
     grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+  
+  .upload-container:hover,
+  .photo-thumb-container:hover,
+  button.btn:hover:not(:disabled) {
+    transform: none !important;
   }
 }

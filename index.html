@@ -43,11 +43,7 @@
       font-size: 26px;
       font-weight: 800;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--ink) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
+      color: var(--primary);
     }
     
     .app-footer {
@@ -146,19 +142,19 @@
             
             <div class="form-group full-width" id="tempoh-masa-group">
               <label>Tempoh Masa Aktiviti</label>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom: 8px;">
+              <div class="time-range-row">
                 <div>
-                  <label for="masa-mula" style="font-size:12px;color:#60646c;margin-bottom:4px;display:block">Masa Mula</label>
+                  <label for="masa-mula" class="form-sub-label">Masa Mula</label>
                   <input type="time" id="masa-mula" name="masa-mula" required>
                 </div>
                 <div>
-                  <label for="masa-tamat" style="font-size:12px;color:#60646c;margin-bottom:4px;display:block">Masa Tamat</label>
+                  <label for="masa-tamat" class="form-sub-label">Masa Tamat</label>
                   <input type="time" id="masa-tamat" name="masa-tamat" required>
                 </div>
               </div>
               <div>
-                <label for="tempoh-aktiviti" style="font-size:12px;color:#60646c;margin-bottom:4px;display:block">Tempoh Aktiviti (Kiraan Automatik)</label>
-                <input type="text" id="tempoh-aktiviti" placeholder="Tempoh akan dikira secara automatik..." readonly style="background-color: #f1f3f4; cursor: not-allowed;">
+                <label for="tempoh-aktiviti" class="form-sub-label">Tempoh Aktiviti (Kiraan Automatik)</label>
+                <input type="text" id="tempoh-aktiviti" placeholder="Tempoh akan dikira secara automatik..." readonly>
               </div>
               <div class="error-text">Sila masukkan masa mula dan tamat yang sah.</div>
             </div>

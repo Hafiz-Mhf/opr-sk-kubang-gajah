@@ -7,8 +7,8 @@ Aplikasi web ringkas tanpa kerangka kerja (pure HTML/CSS/JS) untuk memudahkan pe
 ## Ciri-ciri Utama
 
 - **Wizard 3-Langkah**: Antaramuka berperingkat yang mesra pengguna (Maklumat, Kandungan & Gambar).
-- **Sistem Seretan Gambar (Drag & Drop)**: Memudahkan proses muat naik maksimum 6 keping gambar dengan pratonton kedudukan nisbah 1:1.
-- **Reka Bentuk Beresolusi Tinggi**: Kemas, bertatatingkat dan berpandukan *design.md* (Expo system tokens).
+- **Sistem Seretan Gambar (Drag & Drop)**: Memudahkan proses muat naik maksimum 3 gambar dengan pratonton kedudukan nisbah 1:1.
+- **Reka Bentuk Beresolusi Tinggi**: Kemas, bertatatingkat dan berpandukan *DESIGN.md* (The Sapphire Registry - Sapphire & Slate system tokens).
 - **Mesra Cetakan (Print-Optimized)**: Menghasilkan fail laporan A4 satu halaman sahaja berserta pengoptimuman susun atur grid 2-kolum untuk fail PDF.
 - **Bekerja Luar Talian (Offline First)**: Boleh dijalankan terus dari fail tempatan pelayar (`file://`) tanpa memerlukan pelayan backend.
 
