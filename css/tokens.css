@@ -1,0 +1,55 @@
+:root {
+  /* Fonts */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Colors - Sapphire & Slate Design System */
+  --ink: #0f172a;
+  --body: #334155;
+  --muted: #64748b;
+  --canvas: #ffffff;
+  --canvas-soft: #f8fafc;
+  --canvas-studio: #0f172a; /* Outer dark workspace background for A4 simulator */
+  --hairline: #e2e8f0;
+  --hairline-strong: #cbd5e1;
+  --surface-strong: #f1f5f9;
+  --surface-dark: #0f172a;
+  
+  /* Primary Action Colors (Executive Navy) */
+  --primary: #0f4c81;
+  --primary-hover: #0b375e;
+  --primary-light: #f0f7fc;
+  --on-primary: #ffffff;
+  --text-link: #2563eb;
+  
+  /* Focus Shadows & Glows */
+  --focus-glow: 0 0 0 4px rgba(15, 76, 129, 0.15);
+  --focus-glow-success: 0 0 0 4px rgba(22, 163, 74, 0.15);
+  --focus-glow-error: 0 0 0 4px rgba(239, 68, 68, 0.15);
+
+  /* Semantic helper colors */
+  --semantic-success: #16a34a;
+  --semantic-success-hover: #15803d;
+  --semantic-error: #ef4444;
+  --semantic-error-hover: #dc2626;
+
+  /* Border Radii */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-pill: 9999px;
+
+  /* Spacing */
+  --sp-xs: 8px;
+  --sp-sm: 12px;
+  --sp-base: 16px;
+  --sp-md: 20px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-premium: 0 20px 25px -5px rgba(15, 76, 129, 0.05), 0 8px 10px -6px rgba(15, 76, 129, 0.05);
+}

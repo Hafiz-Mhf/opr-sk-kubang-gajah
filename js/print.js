@@ -1,0 +1,433 @@
+/**
+ * Triggers the browser print dialog with the OPR report
+ * @param {string} oprHtml - The compiled HTML of the report
+ */
+export function printReport(oprHtml) {
+  const printWindow = window.open('', '_blank');
+  
+  if (!printWindow) {
+    alert('Sila benarkan pop-up di pelayar anda untuk mencetak.');
+    return;
+  }
+
+  // Passing raw HTML directly since styles are fully contained in the CSS
+  const processedHtml = oprHtml;
+
+  // Hardcode print.css contents directly to bypass file:// fetch CORS blocks
+  const printCss = `
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 7mm 9mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      color: #171717;
+    }
+
+    .opr-sheet,
+    .opr-sheet * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    }
+
+    .opr-sheet {
+      width: 100%;
+      height: 283mm; /* exact printable A4 height */
+      font-size: 13px;
+      color: #171717;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .opr-body {
+      padding: 12px 18px !important;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+      min-height: 0;
+      box-sizing: border-box;
+    }
+
+    /* Header */
+    .opr-header {
+      background: #154a84 !important;
+      color: white;
+      padding: 8px 14px !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px !important;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+    .opr-header-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .opr-header img {
+      width: 46px !important;
+      height: 46px !important;
+      object-fit: contain;
+    }
+    .opr-header-center {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .opr-school-name {
+      font-size: 15px !important;
+      font-weight: 600;
+      color: white;
+      line-height: 1.2;
+    }
+    .opr-school-sub {
+      font-size: 11px !important;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.4;
+    }
+    .opr-school-label {
+      font-size: 9px !important;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .opr-header-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .opr-date {
+      font-size: 12px !important;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9) !important;
+      white-space: nowrap;
+    }
+
+    /* Title and Badge */
+    .opr-title-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      margin-top: 6px;
+    }
+    .opr-title {
+      font-size: 24px !important;
+      font-weight: 700 !important;
+      line-height: 1.3 !important;
+      color: #000000 !important;
+      margin: 0;
+    }
+    .opr-badge {
+      padding: 4px 10px;
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 12px;
+      display: inline-block;
+      text-transform: uppercase;
+      border: 1.5px solid;
+      white-space: nowrap;
+    }
+    .opr-badge-success {
+      background-color: #e6f4ea !important;
+      color: #137333 !important;
+      border-color: #b3e6c3 !important;
+    }
+    .opr-badge-warning {
+      background-color: #fef7e0 !important;
+      color: #b06000 !important;
+      border-color: #fce196 !important;
+    }
+    .opr-badge-danger {
+      background-color: #fce8e6 !important;
+      color: #c5221f !important;
+      border-color: #fbc2be !important;
+    }
+    .opr-badge-neutral {
+      background-color: #f1f3f4 !important;
+      color: #5f6368 !important;
+      border-color: #dadce0 !important;
+    }
+
+    /* Summary Card */
+    .opr-summary-card {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      padding: 6px 10px;
+      background: #f5f5f5 !important;
+      margin-bottom: 4px;
+    }
+    .opr-summary-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .opr-summary-item:last-child {
+      grid-column: 1 / -1 !important;
+    }
+    .opr-summary-icon {
+      font-size: 14px;
+      color: #154a84;
+    }
+    .opr-summary-details {
+      display: flex;
+      flex-direction: column;
+    }
+    .opr-summary-label {
+      font-size: 7px !important;
+      font-weight: 600;
+      color: #60646c;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .opr-summary-value {
+      font-size: 11px !important;
+      font-weight: 600;
+      color: #171717;
+    }
+
+    /* Sections */
+    .opr-section {
+      margin-bottom: 4px !important;
+    }
+    .opr-section-head {
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase;
+      letter-spacing: 0.4px !important;
+      padding: 3px 8px !important;
+      background: #eef6fa !important;
+      border-left: 4px solid #0f4c81 !important;
+      color: #0f4c81 !important;
+      margin-bottom: 0;
+    }
+    .opr-section-body {
+      font-size: 11px !important;
+      line-height: 1.35 !important;
+      padding: 3px 6px !important;
+      color: #2b2b2b !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+      white-space: pre-wrap !important;
+    }
+
+    .opr-dashboard-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 12px !important;
+      margin-bottom: 4px !important;
+    }
+
+    /* Primary Outcome Section (Hasil & Pencapaian) */
+    .opr-section-hasil {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .opr-section-body-hasil {
+      font-size: 11px !important;
+      line-height: 1.35 !important;
+      font-weight: 400 !important;
+      color: #2b2b2b !important;
+    }
+
+    /* Photos Grid */
+    .opr-section-photos {
+      flex-grow: 1 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      min-height: 0 !important;
+      height: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .opr-photos {
+      display: grid !important;
+      gap: 12px !important;
+      padding: 4px 10px !important;
+      flex-grow: 1 !important;
+      min-height: 0 !important;
+      height: 0 !important;
+    }
+
+    .opr-photos-count-1 {
+      grid-template-columns: 1fr !important;
+      grid-template-rows: 1fr !important;
+    }
+
+    .opr-photos-count-2 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-rows: 1fr !important;
+    }
+
+    .opr-photos-count-3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-rows: 1.2fr 1.8fr !important;
+    }
+    .opr-photos-count-3 > .opr-photo-container:first-child {
+      grid-column: 1 / span 2 !important;
+    }
+
+    .opr-photos-count-4 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-rows: repeat(2, 1fr) !important;
+    }
+
+    .opr-photos-count-5,
+    .opr-photos-count-6,
+    .opr-photos-count-7,
+    .opr-photos-count-8,
+    .opr-photos-count-9 {
+      grid-template-columns: repeat(3, 1fr) !important;
+      grid-auto-rows: 1fr !important;
+    }
+
+    .opr-photo-container {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+    }
+
+    .opr-photo-img {
+      width: 100% !important;
+      height: 0 !important;
+      flex-grow: 1 !important;
+      object-fit: cover !important;
+      border-radius: 5px !important;
+      border: 1px solid #dcdee0 !important;
+    }
+
+    .opr-photos-count-1 .opr-photo-img,
+    .opr-photos-count-2 .opr-photo-img,
+    .opr-photos-count-3 .opr-photo-container:first-child .opr-photo-img,
+    .opr-photos-count-3 .opr-photo-img {
+      min-height: 0 !important;
+    }
+    .opr-photo-caption {
+      font-size: 9px !important;
+      color: #60646c;
+      text-align: center;
+      margin-top: 2px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .opr-photo-caption:empty {
+      display: none !important;
+    }
+
+    /* Notes Space */
+    .opr-notes {
+      margin-top: 5px !important;
+    }
+    .opr-notes-empty {
+      display: none !important;
+    }
+
+    /* Timestamp */
+    .opr-timestamp {
+      display: flex !important;
+      justify-content: space-between !important;
+      font-size: 8px !important;
+      color: #999 !important;
+      padding: 4px 10px 0 !important;
+      border-top: 1px solid #d9d9d9 !important;
+      margin-top: 10px !important;
+    }
+
+    /* Force page-break avoid rules */
+    .opr-sheet,
+    .opr-section,
+    .opr-summary-card,
+    .opr-dashboard-grid,
+    .opr-photos,
+    .opr-photo-container,
+    .opr-timestamp {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+
+    /* Hide non-print elements */
+    .action-bar, .print-btn-row, .btn-row, button {
+      display: none !important;
+    }
+  `;
+
+  // Construct complete HTML document for printing
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="ms">
+    <head>
+      <meta charset="UTF-8">
+      <title>Laporan OPR - SK Kubang Gajah</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <style>
+        ${printCss}
+      </style>
+    </head>
+    <body>
+      ${processedHtml}
+      <script>
+        // Wait for all evidence images to load before launching print dialog
+        window.addEventListener('DOMContentLoaded', () => {
+          const images = Array.from(document.querySelectorAll('.opr-photo-img'));
+          if (images.length === 0) {
+            setTimeout(() => { window.print(); }, 300);
+            return;
+          }
+          
+          let loadedCount = 0;
+          function checkAllLoaded() {
+            loadedCount++;
+            if (loadedCount === images.length) {
+              setTimeout(() => { window.print(); }, 150);
+            }
+          }
+          
+          images.forEach(img => {
+            if (img.complete) {
+              checkAllLoaded();
+            } else {
+              img.addEventListener('load', checkAllLoaded);
+              img.addEventListener('error', checkAllLoaded);
+            }
+          });
+        });
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+}

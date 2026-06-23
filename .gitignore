@@ -1,0 +1,17 @@
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+Thumbs.db
+db.crypt
+.DS_Store
+Desktop.ini
+
+# Log files
+*.log

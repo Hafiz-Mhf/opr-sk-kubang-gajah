@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem One Page Report (OPR) - SK Kubang Gajah</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Aplikasi penjana laporan One Page Report (OPR) untuk Sekolah Kebangsaan Kubang Gajah, Perlis, Malaysia. Ringkas, pantas dan mesra cetak.">
+  <meta name="author" content="SK Kubang Gajah">
+  
+  <!-- Google Fonts: Inter for branding and body, JetBrains Mono for codes/monospacing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/form.css">
+  <link rel="stylesheet" href="css/opr.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+  
+  <style>
+    /* Premium layout styles for app structure */
+    .app-header {
+      text-align: center;
+      margin-bottom: var(--sp-lg);
+      margin-top: var(--sp-sm);
+    }
+    
+    .app-title-logo {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    
+    .app-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--ink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .app-footer {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: var(--sp-xl);
+      padding: var(--sp-base) 0;
+      border-top: 1px solid var(--hairline);
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .app-footer a {
+      color: var(--text-link);
+      text-decoration: none;
+    }
+
+    .app-footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Utility hidden class */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- App Title Header Banner -->
+  <header class="app-header">
+    <div class="app-title-logo">Sekolah Kebangsaan Kubang Gajah</div>
+    <h1 class="app-title">Penjana One Page Report (OPR)</h1>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    
+    <!-- 1. FORM STATE WRAPPER (Stepper Wizard) -->
+    <div id="form-wrapper">
+      
+      <!-- Stepper Progress Header -->
+      <div class="stepper-header">
+        <div class="stepper-connector">
+          <div class="stepper-progress-line" id="progress-line"></div>
+        </div>
+        
+        <!-- Step 1 Indicator -->
+        <div class="step-indicator active" id="step-indicator-1">
+          <div class="step-pill">1</div>
+          <div class="step-label">Maklumat</div>
+        </div>
+        
+        <!-- Step 2 Indicator -->
+        <div class="step-indicator future" id="step-indicator-2">
+          <div class="step-pill">2</div>
+          <div class="step-label">Kandungan</div>
+        </div>
+        
+        <!-- Step 3 Indicator -->
+        <div class="step-indicator future" id="step-indicator-3">
+          <div class="step-pill">3</div>
+          <div class="step-label">Gambar</div>
+        </div>
+      </div>
+      
+      <!-- Form Body -->
+      <form id="opr-form" novalidate>
+        
+        <!-- STEP 1: Maklumat Aktiviti -->
+        <div id="step-1-container" class="form-step">
+          <h2 class="form-step-title">Langkah 1: Maklumat Program / Aktiviti</h2>
+          <div class="form-grid-step1">
+            <div class="form-group full-width">
+              <label for="nama-aktiviti">Nama Aktiviti / Program</label>
+              <input type="text" id="nama-aktiviti" placeholder="Contoh: Hari Sukan Negara Peringkat Sekolah" required>
+              <div class="error-text">Nama aktiviti diperlukan.</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="tarikh-aktiviti">Tarikh Pelaksanaan</label>
+              <input type="date" id="tarikh-aktiviti" required>
+              <div class="error-text">Tarikh yang sah diperlukan.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="status-aktiviti">Status Aktiviti</label>
+              <select id="status-aktiviti" required>
+                <option value="Berjaya Dilaksanakan" selected>BERJAYA DILAKSANAKAN</option>
+                <option value="Dalam Proses">DALAM PROSES</option>
+                <option value="Ditangguhkan">DITANGGUHKAN</option>
+                <option value="Dibatalkan">DIBATALKAN</option>
+              </select>
+            </div>
+            
+            <div class="form-group full-width" id="tempoh-masa-group">
+              <label>Tempoh Masa Aktiviti</label>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom: 8px;">
+                <div>
+                  <label for="masa-mula" style="font-size:12px;color:#60646c;margin-bottom:4px;display:block">Masa Mula</label>
+                  <input type="time" id="masa-mula" name="masa-mula" required>
+                </div>
+                <div>
+                  <label for="masa-tamat" style="font-size:12px;color:#60646c;margin-bottom:4px;display:block">Masa Tamat</label>
+                  <input type="time" id="masa-tamat" name="masa-tamat" required>
+                </div>
+              </div>
+              <div>
+                <label for="tempoh-aktiviti" style="font-size:12px;color:#60646c;margin-bottom:4px;display:block">Tempoh Aktiviti (Kiraan Automatik)</label>
+                <input type="text" id="tempoh-aktiviti" placeholder="Tempoh akan dikira secara automatik..." readonly style="background-color: #f1f3f4; cursor: not-allowed;">
+              </div>
+              <div class="error-text">Sila masukkan masa mula dan tamat yang sah.</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="tempat-aktiviti">Tempat / Lokasi</label>
+              <input type="text" id="tempat-aktiviti" placeholder="Contoh: Dewan Bestari SKKG / Padang Sekolah" required>
+              <div class="error-text">Tempat/lokasi diperlukan.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="penyelaras">Nama Penyampai / Guru Penyampai</label>
+              <input type="text" id="penyelaras" placeholder="Contoh: Encik Ahmad Bin Ali" required>
+              <div class="error-text">Nama penyampai diperlukan.</div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="sasaran">Sasaran</label>
+              <select id="sasaran" required>
+                <option value="" disabled selected>Pilih sasaran...</option>
+                <option value="Semua Murid">Semua Murid</option>
+                <option value="Semua Guru">Semua Guru</option>
+                <option value="Semua Murid dan Guru">Semua Murid dan Guru</option>
+              </select>
+              <div class="error-text">Sila pilih sasaran aktiviti.</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- STEP 2: Kandungan Laporan -->
+        <div id="step-2-container" class="form-step hidden">
+          <h2 class="form-step-title">Langkah 2: Kandungan Laporan</h2>
+          
+          <div class="form-group">
+            <label for="objektif">Objektif Aktiviti</label>
+            <textarea id="objektif" placeholder="Nyatakan objektif utama aktiviti dilaksanakan..." required maxlength="450" aria-describedby="objektif-count"></textarea>
+            <div class="char-count" id="objektif-count">0 / 450 aksara</div>
+            <div class="error-text">Objektif aktiviti diperlukan.</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="hasil">Impak</label>
+            <textarea id="hasil" placeholder="Nyatakan impak, kejayaan, atau peratusan penglibatan..." required maxlength="450" aria-describedby="hasil-count"></textarea>
+            <div class="char-count" id="hasil-count">0 / 450 aksara</div>
+            <div class="error-text">Impak diperlukan.</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="cabaran">Kelemahan/Penambahbaikan (Pilihan)</label>
+            <textarea id="cabaran" placeholder="Nyatakan kelemahan atau cadangan penambahbaikan semasa program..."></textarea>
+          </div>
+          
+          
+          <div class="form-group">
+            <label for="catatan">Catatan Tambahan (Pilihan)</label>
+            <textarea id="catatan" placeholder="Masukkan catatan tambahan sekiranya ada..."></textarea>
+          </div>
+        </div>
+        
+        <!-- STEP 3: Gambar Aktiviti -->
+        <div id="step-3-container" class="form-step hidden">
+          <h2 class="form-step-title">Langkah 3: Gambar Aktiviti (Maksimum 3)</h2>
+          
+          <div class="form-group">
+            <label>Muat Naik Gambar Laporan</label>
+            
+            <!-- Drag and Drop Zone -->
+            <div class="upload-container" id="upload-zone" tabindex="0" role="button" aria-describedby="upload-hint">
+              <span class="upload-icon">📸</span>
+              <p class="upload-text">Drag & drop gambar di sini atau <strong>klik untuk pilih fail</strong></p>
+              <p class="upload-hint" id="upload-hint">Format yang disokong: PNG, JPG, JPEG (Maksimum 3 gambar)</p>
+              <input type="file" id="photo-input" accept="image/*" multiple>
+            </div>
+          </div>
+          
+          <!-- Uploaded Preview List -->
+          <div class="photos-grid-wrapper">
+            <div class="photos-header">
+              <span class="photos-title">Gambar Terpilih</span>
+              <span class="photos-badge" id="photo-count-badge">0/3 gambar</span>
+            </div>
+            
+            <div class="photos-grid" id="photos-preview-grid">
+              <!-- Dynamically populated thumbnails in photos.js -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Stepper Navigation Controls -->
+        <div class="stepper-actions">
+          <button type="button" class="btn btn-secondary hidden" id="prev-btn" disabled>
+            <span class="btn-icon-left">←</span> Kembali
+          </button>
+          
+          <button type="button" class="btn btn-primary" id="next-btn">
+            Seterusnya <span class="btn-icon-right">→</span>
+          </button>
+          
+          <button type="button" class="btn btn-primary hidden" id="submit-btn">
+            Jana OPR <span class="btn-icon-right">✨</span>
+          </button>
+        </div>
+        
+      </form>
+    </div>
+    
+    <!-- 2. REPORT PREVIEW WRAPPER (Hidden initially) -->
+    <div id="preview-wrapper" class="hidden">
+      
+      <!-- OPR report sheet container -->
+      <div id="opr-content">
+        <!-- Rendered by render.js -->
+      </div>
+      
+      <!-- Action buttons menu below printed sheet -->
+      <div class="opr-actions">
+        <button type="button" class="btn btn-secondary" id="edit-back-btn">
+          <span class="btn-icon-left">←</span> Kembali Edit
+        </button>
+        
+        <button type="button" class="btn btn-primary" id="print-pdf-btn">
+          Cetak / Simpan PDF <span class="btn-icon-right">🖨️</span>
+        </button>
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- App Info Footer -->
+  <footer class="app-footer">
+    <p>&copy; 2026 Sekolah Kebangsaan Kubang Gajah, Malaysia. Penjana One Page Report (OPR).</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/form.js"></script>
+</body>
+</html>
