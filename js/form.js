@@ -258,9 +258,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!fields.objektif.value.trim()) {
         showError(fields.objektif, 'Sila nyatakan objektif aktiviti.');
         isValid = false;
+      } else if (fields.objektif.value.length > 450) {
+        showError(fields.objektif, 'Objektif tidak boleh melebihi 450 aksara.');
+        isValid = false;
       }
+      
       if (!fields.hasil.value.trim()) {
         showError(fields.hasil, 'Sila nyatakan impak aktiviti.');
+        isValid = false;
+      } else if (fields.hasil.value.length > 450) {
+        showError(fields.hasil, 'Impak tidak boleh melebihi 450 aksara.');
         isValid = false;
       }
     }

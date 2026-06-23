@@ -81,6 +81,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 14px;
   border: 2px solid transparent;
@@ -109,6 +110,7 @@ body {
 
 .step-label {
   margin-top: var(--sp-xs);
+  font-family: var(--font-display);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -136,8 +138,9 @@ body {
 }
 
 .form-step-title {
+  font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: var(--sp-lg);
   color: var(--ink);
 }
@@ -149,6 +152,7 @@ body {
 }
 
 .form-group label {
+  font-family: var(--font-display);
   font-size: 13px;
   font-weight: 600;
   color: var(--ink);
@@ -395,7 +399,7 @@ body {
 }
 
 button.btn {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
   border-radius: var(--r-md);
