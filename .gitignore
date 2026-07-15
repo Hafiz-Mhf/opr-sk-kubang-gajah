@@ -15,3 +15,20 @@ Desktop.ini
 
 # Log files
 *.log
+
+# AI/Agent Configs & Skills
+skills/
+.agent/
+.impeccable/
+.gemini/
+
+# Design & Product Specs (if copied to project root)
+DESIGN.md
+PRODUCT.md
+
+# Temporary and local config files
+*.tmp
+*.temp
+.env
+.env.local
+
